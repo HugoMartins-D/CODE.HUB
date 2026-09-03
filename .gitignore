@@ -1,5 +1,6 @@
 node_modules/
 dist/
+.pnpm-store/
 build/
 .cache/
 .env*
@@ -7,6 +8,7 @@ build/
 vite.config.*.timestamp-*
 *.tsbuildinfo
 *-debug.log*
+.DS_Store
 logs/
 *.log
 test-results/
