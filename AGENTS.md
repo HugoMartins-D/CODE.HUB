@@ -39,3 +39,16 @@ This project uses **Tailwind CSS v4** through the `@tailwindcss/vite` plugin con
 - Use double quotes for strings containing apostrophes (`"We're here to help"`), or escape them in single-quoted strings. An unescaped apostrophe in a single-quoted string breaks the build.
 - Ensure JSX tags are closed and braces are balanced.
 - Export components as default exports.
+
+## Registro de alterações
+
+Toda alteração é registrada em `docs/CHANGELOG.md`, com o motivo — o diff
+explica o quê, o registro explica o porquê.
+
+**Alteração crítica vira pull request depois de feita.** Crítico é o que quebra
+o build, muda o deploy, mexe em dependência, ou tem impacto de segurança. Faça e
+valide o trabalho primeiro (`npm run check`); o PR carrega o resultado já
+verificado, com o passo a passo da verificação na descrição. O resto pode ir
+direto na branch de trabalho.
+
+Achados de segurança em aberto ficam em `docs/SECURITY.md`.
