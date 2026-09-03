@@ -43,7 +43,7 @@ describe("PostCard", () => {
             text: "Com avatar",
             media: [],
             createdAt: "2026-09-03T12:00:00.000Z",
-          } as Parameters<typeof PostCard>[0]["post"]}
+          }}
         />
       </MemoryRouter>,
     );

@@ -2,6 +2,7 @@ import { AppwriteException, ID, Permission, Query, Role } from "appwrite";
 import {
   APPWRITE_DATABASE_ID,
   APPWRITE_POST_MEDIA_BUCKET_ID,
+  APPWRITE_PROFILE_MEDIA_BUCKET_ID,
   storage,
   tables,
 } from "@/lib/appwrite";
@@ -17,6 +18,8 @@ export type Post = {
   authorId: string;
   authorName: string;
   authorHeadline: string;
+  authorAvatarUrl?: string;
+  authorAvatarPosition?: string;
   text: string;
   media: PostMedia[];
   createdAt: string;
@@ -29,7 +32,13 @@ type PostRow = {
   mediaFileIds?: string[];
   createdAt: string;
 };
-type AuthorRow = { userId: string; name: string; headline?: string };
+type AuthorRow = {
+  userId: string;
+  name: string;
+  headline?: string;
+  avatarFileId?: string;
+  avatarPosition?: string;
+};
 
 export class PostError extends Error {
   constructor(message: string) {
@@ -75,6 +84,13 @@ async function hydrate(rows: PostRow[]): Promise<Post[]> {
       authorName:
         author?.name ?? (active?.id === row.authorId ? active.name : "Pessoa da comunidade"),
       authorHeadline: author?.headline ?? "",
+      authorAvatarUrl: author?.avatarFileId
+        ? storage.getFileView({
+            bucketId: APPWRITE_PROFILE_MEDIA_BUCKET_ID,
+            fileId: author.avatarFileId,
+          })
+        : undefined,
+      authorAvatarPosition: author?.avatarPosition,
       text: row.text ?? "",
       media: mediaFromIds(row.mediaFileIds),
       createdAt: row.createdAt,

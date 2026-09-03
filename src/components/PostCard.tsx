@@ -21,8 +21,17 @@ export default function PostCard({
   return (
     <article className="rounded-[16px] border border-[#313135] bg-[#141416] p-[20px]">
       <header className="flex items-start gap-[12px]">
-        <span className="flex size-[42px] shrink-0 items-center justify-center rounded-full bg-[#474797] font-semibold text-white">
-          {initialsOf(post.authorName)}
+        <span className="flex size-[42px] shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#474797] font-semibold text-white">
+          {post.authorAvatarUrl ? (
+            <img
+              src={post.authorAvatarUrl}
+              alt={`Foto de ${post.authorName}`}
+              className="size-full object-cover"
+              style={{ objectPosition: post.authorAvatarPosition ?? "50% 50%" }}
+            />
+          ) : (
+            initialsOf(post.authorName)
+          )}
         </span>
         <div className="min-w-0 flex-1">
           <p className="font-semibold text-[#f7f7f8]">{post.authorName}</p>
