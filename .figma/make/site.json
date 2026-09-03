@@ -1,0 +1,10 @@
+{
+  "description": "Connect with fellow developers and share coding projects on this social platform designed for tech enthusiasts to collaborate and network.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
