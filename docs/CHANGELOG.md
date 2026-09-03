@@ -113,7 +113,8 @@ nativos de `linux-x64-gnu` presentes no lock. Os problemas estavam em volta:
 
 ## Pendências conhecidas
 
-Registradas aqui para não se perderem; nenhuma é regressão deste ciclo.
+Registradas aqui para não se perderem; nenhuma é regressão deste ciclo. Todas
+estão divididas em sprints, com critério de aceite, em [SPRINTS.md](SPRINTS.md).
 
 - **`robots: index: false`** em `.figma/make/site.json`. O plugin do Vite traduz
   isso em `dist/robots.txt` com `Disallow: /` **e** numa

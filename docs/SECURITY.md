@@ -179,10 +179,11 @@ vetor ao custo de desligar a funcionalidade.
 
 ---
 
-## Ordem sugerida
+## Ordem de execução
 
-1. Domínio próprio no endpoint do Appwrite (#3) — tira a sessão do `localStorage`.
-2. Auditar Document Security nas cinco tabelas (#4) — é o que decide se o
-   controle de acesso do produto existe de fato.
-3. Ligar as políticas de senha (#5) — minutos de console.
-4. Appwrite Function para notificações (#6).
+Os achados #3 a #6 estão divididos em sprints, com o que fazer e o critério de
+aceite de cada um, em [SPRINTS.md](SPRINTS.md).
+
+O Sprint 1 concentra #3, #4 e #5 — os três são configuração de console e juntos
+decidem se o controle de acesso do produto existe de fato. O #6 é o Sprint 2,
+porque depende de escrever uma Appwrite Function.
