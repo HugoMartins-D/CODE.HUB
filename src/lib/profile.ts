@@ -69,6 +69,36 @@ export class ProfileError extends Error {
   }
 }
 
+const SAFE_URL_SCHEMES = new Set(["http:", "https:"]);
+
+/**
+ * Reduz um endereço informado pela Pessoa a uma URL http(s) absoluta.
+ * Devolve "" para qualquer coisa que não seja navegável com segurança —
+ * `javascript:`, `data:`, `vbscript:` e lixo que não parseia. O campo é
+ * renderizado como `href` no Perfil público, então o valor cru nunca deve
+ * chegar ao DOM: o React neutraliza `javascript:` hoje, mas isso é uma
+ * garantia do framework, não desta aplicação.
+ */
+export function sanitizeWebsite(value: string): string {
+  const raw = value.trim();
+  if (!raw) return "";
+  const candidate = /^[a-z][a-z0-9+.-]*:/i.test(raw) ? raw : `https://${raw}`;
+  let url: URL;
+  try {
+    url = new URL(candidate);
+  } catch {
+    return "";
+  }
+  return SAFE_URL_SCHEMES.has(url.protocol) ? url.toString() : "";
+}
+
+export function validateWebsite(value: string): string {
+  const url = sanitizeWebsite(value);
+  if (value.trim() && !url)
+    throw new ProfileError("Use um endereço da web válido, começando com http:// ou https://.");
+  return url;
+}
+
 export function normalizeUsername(value: string): string {
   return value
     .trim()
@@ -134,7 +164,7 @@ function fromRow(row: ProfileRow, stats: ProfileStats): Profile {
     bannerUrl: mediaUrl(row.bannerFileId),
     headline: row.headline ?? "",
     location: row.location ?? "",
-    website: row.website ?? "",
+    website: sanitizeWebsite(row.website ?? ""),
     bio: row.bio ?? "",
     skills: row.skills ?? [],
     stats,
@@ -284,7 +314,7 @@ export async function saveProfile(
     ...(patch.name !== undefined && { name: patch.name }),
     ...(patch.headline !== undefined && { headline: patch.headline }),
     ...(patch.location !== undefined && { location: patch.location }),
-    ...(patch.website !== undefined && { website: patch.website || null }),
+    ...(patch.website !== undefined && { website: validateWebsite(patch.website) || null }),
     ...(patch.bio !== undefined && { bio: patch.bio }),
     ...(patch.skills !== undefined && { skills: patch.skills }),
     ...(avatarFileId !== undefined && { avatarFileId }),
