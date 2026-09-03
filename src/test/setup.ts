@@ -1,5 +1,6 @@
 import "@testing-library/jest-dom/vitest";
 import "fake-indexeddb/auto";
+import { cleanup } from "@testing-library/react";
 import { afterEach, vi } from "vitest";
 
 vi.mock("@/lib/appwrite", () => {
@@ -102,6 +103,7 @@ vi.mock("@/lib/appwrite", () => {
 });
 
 afterEach(async () => {
+  cleanup();
   const [{ resetAuthStore }, { resetProfile }] = await Promise.all([
     import("@/lib/auth"),
     import("@/lib/profile"),
